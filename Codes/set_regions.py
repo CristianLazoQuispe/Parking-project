@@ -29,6 +29,11 @@ COLOR_SPACE_FREE     = COLOR_GREEN
 COLOR_SPACE_NOT_FREE = COLOR_RED 
 COLOR_EDGES = COLOR_BLACK
 
+#PATHS
+
+DATA_PATH = "../Data/"
+RESULTS_PATH = "../Results/"
+
 
 
 class SelectFromCollection(object):
@@ -145,25 +150,25 @@ def plot_points(image,points,states_is_free,alpha=0.1):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v",'--video_path', help="Path of video file", default="../Data/stace_park3.mp4",type=str)
+    parser.add_argument("-v",'--video_path', help="Path of video file", default="stace_park3.mp4",type=str)
     parser.add_argument("-f",'--n_frame', help="Number of frame to process", default=5,type=int)
-    parser.add_argument("-o",'--out_file', help="Name of the output file", default="../Results/regions.p",type=str)
+    parser.add_argument("-o",'--out_file', help="Name of the output file", default="regions.p",type=str)
     args = parser.parse_args()
 
     global globSelect
     global savePath
 
     # Define parameters
-    savePath = args.out_file if args.out_file.endswith(".p") else args.out_file+".p"
     n_frame = args.n_frame
-    video_path = args.video_path
-    out_file = args.out_file
-    
 
-    print("Path of video file         : ",args.video_path)
-    print("Number of frame to process : ",args.n_frame)
-    print("Name of the output file    : ",args.out_file)
+    savePath = args.out_file if args.out_file.endswith(".p") else args.out_file+".p"
+    savePath = os.path.join(RESULTS_PATH,savePath)
 
+    video_path = os.path.join(DATA_PATH,args.video_path)    
+
+    print("Path of video file         : ",video_path)
+    print("Number of frame to process : ",n_frame)
+    print("Name of the output file    : ",savePath)
 
     # Check if the points exits
     if os.path.exists(savePath):
@@ -174,7 +179,7 @@ if __name__ == '__main__':
         bgr_image = cv2.cvtColor(rgb_image,cv2.COLOR_RGB2BGR).copy()
 
         # get points        
-        points = read_points(out_file)
+        points = read_points(savePath)
         
         # simulate states
         states_is_free = [True for i in range(len(points))]
@@ -184,7 +189,7 @@ if __name__ == '__main__':
 
         # show image
         cv2.imshow("Plot parking spaces ", output_image)
-        filename_image = '../Results/plot_points_'+out_file.split('/')[-1].split('.')[0]+'_parking_spaces.jpg' 
+        filename_image = os.path.join(RESULTS_PATH,'plot_points_'+savePath.split('/')[-1].split('.')[0]+'_parking_spaces.jpg')
         cv2.imwrite(filename_image, output_image)
         cv2.waitKey()
 
