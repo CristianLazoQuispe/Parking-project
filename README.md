@@ -40,7 +40,7 @@
 # Regions
 
         $ cd Codes
-        $ python3 set_regions.py -v ../Data/stace_park3.mp4 -o ../Results/regions.p
+        $ python3 set_regions.py -v stace_park3.mp4 -o regions.p
 
         Mark spaces                 
                 

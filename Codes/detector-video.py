@@ -1,21 +1,17 @@
+import argparse
 import base64
 import io
-from shapely.geometry import Polygon as shapely_poly
-from shapely.geometry import box
-import argparse
+import os
 import pickle
 from pathlib import Path
-from mrcnn.model import MaskRCNN
-import mrcnn.utils
-import mrcnn.config
-import cv2
-import numpy as np
-#import git
-import os
 
-# if not os.path.exists("Mask_RCNN"):
-#     print("Cloning M-RCNN repository...")
-#     git.Git("./").clone("https://github.com/matterport/Mask_RCNN.git")
+import cv2
+import mrcnn.config
+import mrcnn.utils
+import numpy as np
+from mrcnn.model import MaskRCNN
+from shapely.geometry import Polygon as shapely_poly
+from shapely.geometry import box
 
 
 class Config(mrcnn.config.Config):

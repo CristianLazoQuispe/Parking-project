@@ -11,6 +11,8 @@ from matplotlib.widgets import PolygonSelector
 from shapely.geometry import Polygon as shapely_poly
 from shapely.geometry import box
 
+import config
+
 points = []
 prev_points = []
 patches = []
@@ -19,20 +21,15 @@ breaker = False
 
 # PARAMETERS INITIALIZATIONS
 
-COLOR_PURPLE = (130,40,76)
-COLOR_GREEN  = (20,255,57)
-COLOR_BLACK  = (0,0,0)
-COLOR_RED    = (0,0,255)
-
 # COLOR TO PLOT
-COLOR_SPACE_FREE     = COLOR_GREEN 
-COLOR_SPACE_NOT_FREE = COLOR_RED 
-COLOR_EDGES = COLOR_BLACK
+COLOR_SPACE_FREE     = config.COLOR_SPACE_FREE 
+COLOR_SPACE_NOT_FREE = config.COLOR_SPACE_NOT_FREE 
+COLOR_EDGES = config.COLOR_EDGES
 
 #PATHS
 
-DATA_PATH = "../Data/"
-RESULTS_PATH = "../Results/"
+DATA_PATH = config.DATA_PATH
+RESULTS_PATH = config.RESULTS_PATH
 
 
 
