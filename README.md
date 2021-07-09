@@ -34,11 +34,13 @@
 
 # Download model
 
+        $ cd Codes
         $ python3 download_model.py
 
 # Regions
 
-        $ python3 set_regions.py ../Data/stace_park3.mp4
+        $ cd Codes
+        $ python3 set_regions.py -v ../Data/stace_park3.mp4 -o ../Results/regions.p
 
         Mark spaces                 
                 
@@ -52,8 +54,10 @@
 
 # Detector-img
 
+        $ cd Codes
         $ python3 detector-img.py "../Data/espacio-libre.jpg" "../Results/regions.p"
 
 # Detector-video
 
+        $ cd Codes
         $ python3 detector-video.py "../Data/stace_park3.mp4" "../Results/regions.p"
