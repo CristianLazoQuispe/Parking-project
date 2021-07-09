@@ -183,6 +183,8 @@ if __name__ == '__main__':
 
         # show image
         cv2.imshow("Plot parking spaces ", output_image)
+        filename_image = '../Results/plot_points_'+out_file.split('/')[-1].split('.')[0]+'_parking_spaces.jpg' 
+        cv2.imwrite(filename_image, output_image)
         cv2.waitKey()
 
     else:
