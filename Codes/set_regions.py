@@ -17,6 +17,8 @@ patches = []
 total_points = []
 breaker = False
 
+# https://stackoverflow.com/questions/60724263/python-drawing-a-polygon-over-webcam-video-using-mouse-clicks-to-detect-points
+
 
 class SelectFromCollection(object):
     def __init__(self, ax):
