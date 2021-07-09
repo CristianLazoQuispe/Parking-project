@@ -1,5 +1,6 @@
 import base64
 import io
+from posixpath import dirname
 from shapely.geometry import Polygon as shapely_poly
 from shapely.geometry import box
 import argparse
@@ -32,6 +33,14 @@ config.display()
 COCO_MODEL_PATH = os.path.join("../Model/", "mask_rcnn_coco.h5")
 
 print("Download in ",COCO_MODEL_PATH)
+
+dirName = "../Model/"
+
+if not os.path.exists(dirName):
+    os.makedirs(dirName)
+    print("Directory " , dirName ,  " Created ")
+else:    
+    print("Directory " , dirName ,  " already exists")   
 
 if not os.path.exists(COCO_MODEL_PATH):
     mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
