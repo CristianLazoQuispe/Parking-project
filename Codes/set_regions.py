@@ -61,6 +61,26 @@ def onkeypress(event):
             total_points.append(pts)
             prev_points = points
 
+def get_image_from_video(video_path,n_frame = 5):
+
+    video_capture = cv2.VideoCapture(video_path)
+    cnt=0
+    rgb_image = None
+    while video_capture.isOpened():
+        success, frame = video_capture.read()
+        if not success:
+            break
+        if cnt == n_frame:
+            rgb_image = frame
+            break
+        cnt += 1
+        cv2.imshow('Frame',frame)
+        if cv2.waitKey(5) & 0xFF == ord('q'):
+            break
+    video_capture.release()
+    cv2.imwrite('../Data/parking_space.jpg',rgb_image)
+
+    return cv2.cvtColor(rgb_image,cv2.COLOR_BGR2RGB)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -81,21 +101,8 @@ if __name__ == '__main__':
     print("> When you are done press 'b' to Exit the program\n")
     
     print(args.video_path)
-    video_capture = cv2.VideoCapture(args.video_path)
-    cnt=0
-    rgb_image = None
-    while video_capture.isOpened():
-        success, frame = video_capture.read()
-        if not success:
-            break
-        if cnt == 5:
-            rgb_image = frame[:, :, ::-1]
-        cnt += 1
-        cv2.imshow('Frame',frame)
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
-    video_capture.release()
-    
+    rgb_image = get_image_from_video(args.video_path,n_frame = 5)
+
     cv2.destroyAllWindows()
 
     while True:
