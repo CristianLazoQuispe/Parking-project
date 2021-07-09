@@ -39,11 +39,16 @@
 # Regions
 
         $ python3 set_regions.py ../Data/stace_park3.mp4
+
+        Mark spaces                 
                 
-        - Click 4 points
-        - Push n
-        - Push q
-        - Push b
+                - Click 4 points
+                - Push n
+                - Push q
+        
+        Fish process
+                
+                - Push b
 
 # Detector-img
 
