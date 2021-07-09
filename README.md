@@ -32,5 +32,23 @@
         $ python setup.py clean --all install
 
 
+# Download model
 
+        $ python3 download_model.py
 
+# Regions
+
+        $ python3 set_regions.py ../Data/stace_park3.mp4
+                
+        - Click 4 points
+        - Push n
+        - Push q
+        - Push b
+
+# Detector-img
+
+        $ python3 detector-img.py "../Data/espacio-libre.jpg" "../Results/regions.p"
+
+# Detector-video
+
+        $ python3 detector-video.py "../Data/stace_park3.mp4" "../Results/regions.p"
