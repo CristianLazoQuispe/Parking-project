@@ -17,6 +17,7 @@ patches = []
 total_points = []
 breaker = False
 
+# PARAMETERS INITIALIZATIONS
 
 COLOR_PURPLE = (130,40,76)
 COLOR_GREEN  = (20,255,57)
