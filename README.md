@@ -7,6 +7,7 @@
         $ sudo apt install software-properties-common
         $ sudo add-apt-repository ppa:deadsnakes/ppa
         $ sudo apt install python3.7
+        $ sudo apt-get install python3.7-dev
         $ python3.7 --version
 
 # Install virtual enviroment
@@ -30,7 +31,47 @@
         $ git clone https://github.com/akTwelve/Mask_RCNN.git aktwelve_mask_rcnn
         $ pip install -r requirements.txt
         $ python setup.py clean --all install
+        $ pip3.7 install pycocotools
+        $ pip install typing-extensions==3.10.0.0
+        
+        https://github.com/jsbroks/imantics
+
+        $ pip install imantics
+
+# Install flask
+
+        $ pip install flask
 
 
+# Download model
+
+        $ cd Codes
+        $ python3 01_download_model.py
+
+# Regions
+
+        $ cd Codes
+        $ python3 02_set_regions.py -v stace_park3.mp4 -o regions.p
+
+        Mark spaces                 
+                
+                - Click 4 points
+                - Push n
+                - Push q
+        
+        End process
+                
+                - Push b
+
+# Park_detection
+
+        $ cd Codes
+        $ python3 03_park_detection.py -i espacio-libre.jpg -p regions2.p
+        $ python3 03_park_detection.py -i espacio-ocupado.jpg -p regions2.p
 
 
+# API
+
+        $ cd API
+        $ python3 app.py -i espacio-ocupado.jpg -p regis2.p
+        $ python3 app.py -i espacio-libre.jpg -p regions2.p
