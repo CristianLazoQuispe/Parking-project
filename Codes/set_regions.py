@@ -11,7 +11,7 @@ from matplotlib.widgets import PolygonSelector
 from shapely.geometry import Polygon as shapely_poly
 from shapely.geometry import box
 
-import config
+import parameters
 
 points = []
 prev_points = []
@@ -22,14 +22,14 @@ breaker = False
 # PARAMETERS INITIALIZATIONS
 
 # COLOR TO PLOT
-COLOR_SPACE_FREE     = config.COLOR_SPACE_FREE 
-COLOR_SPACE_NOT_FREE = config.COLOR_SPACE_NOT_FREE 
-COLOR_EDGES = config.COLOR_EDGES
+COLOR_SPACE_FREE     = parameters.COLOR_SPACE_FREE 
+COLOR_SPACE_NOT_FREE = parameters.COLOR_SPACE_NOT_FREE 
+COLOR_EDGES = parameters.COLOR_EDGES
 
 #PATHS
 
-DATA_PATH = config.DATA_PATH
-RESULTS_PATH = config.RESULTS_PATH
+DATA_PATH = parameters.DATA_PATH
+RESULTS_PATH = parameters.RESULTS_PATH
 
 
 
@@ -91,6 +91,7 @@ def get_image_from_video(video_path,n_frame = 5):
         if cv2.waitKey(5) & 0xFF == ord('q'):
             break
     video_capture.release()
+    cv2.destroyAllWindows()
     cv2.imwrite('../Data/parking_space.jpg',rgb_image)
 
     return cv2.cvtColor(rgb_image,cv2.COLOR_BGR2RGB)
@@ -142,8 +143,31 @@ def plot_points(image,points,states_is_free,alpha=0.1):
 
     return output_image
 
+def make_points(rgb_image):
+    '''
+        Input : RGB image
 
+        Ouput: save points 
+    '''
+    while True:
+        fig, ax = plt.subplots()
+        image = rgb_image
+        ax.imshow(image)
+    
+        p = PatchCollection(patches, alpha=0.7)
+        p.set_array(10*np.ones(len(patches)))
+        ax.add_collection(p)
+            
+        globSelect = SelectFromCollection(ax)
+        bbox = plt.connect('key_press_event', onkeypress)
+        break_event = plt.connect('key_press_event', break_loop)
+        print(bbox)
+        manager = plt.get_current_fig_manager()
+        manager.window.showMaximized()
 
+        plt.show()
+        globSelect.disconnect()
+    
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -157,12 +181,11 @@ if __name__ == '__main__':
 
     # Define parameters
     n_frame = args.n_frame
-
     savePath = args.out_file if args.out_file.endswith(".p") else args.out_file+".p"
     savePath = os.path.join(RESULTS_PATH,savePath)
-
     video_path = os.path.join(DATA_PATH,args.video_path)    
 
+    # Print parameters
     print("Path of video file         : ",video_path)
     print("Number of frame to process : ",n_frame)
     print("Name of the output file    : ",savePath)
@@ -186,9 +209,11 @@ if __name__ == '__main__':
 
         # show image
         cv2.imshow("Plot parking spaces ", output_image)
+        cv2.waitKey()
+
+        # save image
         filename_image = os.path.join(RESULTS_PATH,'plot_points_'+savePath.split('/')[-1].split('.')[0]+'_parking_spaces.jpg')
         cv2.imwrite(filename_image, output_image)
-        cv2.waitKey()
 
     else:
         print(10*'*','Make points',10*'*')
@@ -202,25 +227,5 @@ if __name__ == '__main__':
         
 
         rgb_image = get_image_from_video(video_path,n_frame = n_frame)
-
-        cv2.destroyAllWindows()
-
-        while True:
-            fig, ax = plt.subplots()
-            image = rgb_image
-            ax.imshow(image)
         
-            p = PatchCollection(patches, alpha=0.7)
-            p.set_array(10*np.ones(len(patches)))
-            ax.add_collection(p)
-                
-            globSelect = SelectFromCollection(ax)
-            bbox = plt.connect('key_press_event', onkeypress)
-            break_event = plt.connect('key_press_event', break_loop)
-            print(bbox)
-            manager = plt.get_current_fig_manager()
-            manager.window.showMaximized()
-
-            plt.show()
-            globSelect.disconnect()
-        
+        make_points(rgb_image)

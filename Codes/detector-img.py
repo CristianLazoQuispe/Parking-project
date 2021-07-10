@@ -15,7 +15,7 @@ from mrcnn.model import MaskRCNN
 from shapely.geometry import Polygon as shapely_poly
 from shapely.geometry import box
 
-import config
+import parameters
 
 # if not os.path.exists("Mask_RCNN"):
 #     print("Cloning M-RCNN repository...")

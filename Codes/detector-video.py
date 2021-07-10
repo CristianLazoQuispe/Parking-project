@@ -13,6 +13,8 @@ from mrcnn.model import MaskRCNN
 from shapely.geometry import Polygon as shapely_poly
 from shapely.geometry import box
 
+import parameters
+
 
 class Config(mrcnn.config.Config):
     NAME = "model_config"
@@ -25,10 +27,10 @@ class Config(mrcnn.config.Config):
 config = Config()
 config.display()
 
-ROOT_DIR = os.getcwd()
-MODEL_DIR = os.path.join(ROOT_DIR, "logs")
-#COCO_MODEL_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
-COCO_MODEL_PATH = os.path.join("../Model/", "mask_rcnn_coco.h5")
+
+MODEL_DIR = os.path.join(parameters.RESULTS_PATH, "logs")
+
+COCO_MODEL_PATH = os.path.join(parameters.MODEL_PATH,parameters.MODEL_NAME)
 
 print(COCO_MODEL_PATH)
 
