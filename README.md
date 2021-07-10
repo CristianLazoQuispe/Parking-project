@@ -7,6 +7,7 @@
         $ sudo apt install software-properties-common
         $ sudo add-apt-repository ppa:deadsnakes/ppa
         $ sudo apt install python3.7
+        $ sudo apt-get install python3.7-dev
         $ python3.7 --version
 
 # Install virtual enviroment
@@ -30,6 +31,13 @@
         $ git clone https://github.com/akTwelve/Mask_RCNN.git aktwelve_mask_rcnn
         $ pip install -r requirements.txt
         $ python setup.py clean --all install
+        $ pip3.7 install pycocotools
+        $ pip install typing-extensions==3.10.0.0
+        
+        https://github.com/jsbroks/imantics
+
+        $ pip install imantics
+
 
 
 # Download model
