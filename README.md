@@ -38,17 +38,20 @@
 
         $ pip install imantics
 
+# Install flask
+
+        $ pip install flask
 
 
 # Download model
 
         $ cd Codes
-        $ python3 download_model.py
+        $ python3 01_download_model.py
 
 # Regions
 
         $ cd Codes
-        $ python3 set_regions.py -v stace_park3.mp4 -o regions.p
+        $ python3 02_set_regions.py -v stace_park3.mp4 -o regions.p
 
         Mark spaces                 
                 
@@ -56,16 +59,19 @@
                 - Push n
                 - Push q
         
-        Fish process
+        End process
                 
                 - Push b
 
-# Detector-img
+# Park_detection
 
         $ cd Codes
-        $ python3 detector-img.py "../Data/espacio-libre.jpg" "../Results/regions.p"
+        $ python3 03_park_detection.py -i espacio-libre.jpg -p regions2.p
+        $ python3 03_park_detection.py -i espacio-ocupado.jpg -p regions2.p
 
-# Detector-video
 
-        $ cd Codes
-        $ python3 detector-video.py "../Data/stace_park3.mp4" "../Results/regions.p"
+# API
+
+        $ cd API
+        $ python3 app.py -i espacio-ocupado.jpg -p regis2.p
+        $ python3 app.py -i espacio-libre.jpg -p regions2.p
