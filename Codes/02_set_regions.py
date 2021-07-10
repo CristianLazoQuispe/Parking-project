@@ -15,8 +15,6 @@ import parameters
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Polygon
 from matplotlib.widgets import PolygonSelector
-from shapely.geometry import Polygon as shapely_poly
-from shapely.geometry import box
 from utils import *
 
 points = []

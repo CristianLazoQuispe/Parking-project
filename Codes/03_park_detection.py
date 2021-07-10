@@ -6,18 +6,13 @@ if module_path not in sys.path:
 
 
 import argparse
-import math
 import os
-import random
 import sys
 
 import cv2
-import matplotlib
 import matplotlib.pyplot as plt
 import mrcnn.model as modellib
 import numpy as np
-import skimage.io
-from mrcnn import utils, visualize
 
 from utils import *
 import parameters

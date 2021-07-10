@@ -1,20 +1,14 @@
-import argparse
-import base64
-import io
-#import git
-import os
-import pickle
-from pathlib import Path
-from posixpath import dirname
 
-import cv2
+import sys
+
+module_path = "../packages"
+if module_path not in sys.path:
+    sys.path.append(module_path)
+    
+import os
 import mrcnn.config
 import mrcnn.utils
-import numpy as np
-from mrcnn.model import MaskRCNN
-from shapely.geometry import Polygon as shapely_poly
-from shapely.geometry import box
-
+import parameters
 
 class Config(mrcnn.config.Config):
     NAME = "model_config"
@@ -27,11 +21,11 @@ class Config(mrcnn.config.Config):
 config = Config()
 config.display()
 
-COCO_MODEL_PATH = os.path.join("../Model/", "mask_rcnn_coco.h5")
+COCO_MODEL_PATH = os.path.join(parameters.MODEL_PATH,parameters.MODEL_NAME)
 
 print("Download in ",COCO_MODEL_PATH)
 
-dirName = "../Model/"
+dirName = parameters.MODEL_PATH
 
 if not os.path.exists(dirName):
     os.makedirs(dirName)

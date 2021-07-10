@@ -5,11 +5,8 @@ module_path = "../packages"
 if module_path not in sys.path:
     sys.path.append(module_path)
 
-
-
 from flask import Flask, request, Response
 import flask
-import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import os
@@ -21,20 +18,16 @@ import coco
 
 from datetime import datetime
 import cv2
-import matplotlib
 import matplotlib.pyplot as plt
 import mrcnn.model as modellib
 import numpy as np
-import skimage.io
-from mrcnn import utils, visualize
 
 from utils import *
 import parameters
 import coco
-#import tensorflow.compat.v1 as tf
-#tf.disable_v2_behavior()
-#from keras.backend import clear_session
 
+
+save_results = True
 
 # Directory to save logs and trained model
 MODEL_DIR = os.path.join(parameters.RESULTS_PATH, "logs")
@@ -72,11 +65,7 @@ set_session(sess)
 
 model.load_weights(COCO_MODEL_PATH, by_name=True)
 model.keras_model._make_predict_function()
-#session = tf.Session(config=config)
 
-
-#global graph
-#graph = tf.compat.v1.get_default_graph()
 
 
 # Initialize the Flask application
@@ -99,43 +88,36 @@ def test():
 
     print(date_time,'REQUEST DATA ',r.data)
 
+    # read image
     bgr_image = cv2.imread(image_filename)
-    print(image_filename,bgr_image.shape)
     rgb_image = cv2.cvtColor(bgr_image,cv2.COLOR_BGR2RGB)
 
+    # predict car points with mask rcnn
     with graph.as_default():
         set_session(sess)
         car_points = get_car_points(rgb_image,model)
             
     states_is_free = get_states_optimizado(bgr_image,car_points,park_points)
-    # plot points and states
 
-    park_spaces_image = plot_points(bgr_image.copy(),park_points,states_is_free,0.2)
-    park_spaces_image = plot_cars(park_spaces_image,car_points,alpha=0.5)
 
-    park_spaces_image = cv2.cvtColor(park_spaces_image,cv2.COLOR_BGR2RGB)
+    if save_results:
 
-    name_img = image_filename.split('/')[-1].split('.')[0]
-    name_point = points_filename.split('/')[-1].split('.')[0]
-
-    park_spaces_image = cv2.cvtColor(park_spaces_image,cv2.COLOR_RGB2BGR)
-    cv2.imwrite(parameters.RESULTS_PATH+'Result_park_spaces_'+name_img+'_'+name_point+'_.jpg',park_spaces_image)
+        park_spaces_image = plot_points(bgr_image.copy(),park_points,states_is_free,0.2)
+        park_spaces_image = plot_cars(park_spaces_image,car_points,alpha=0.5)
+        park_spaces_image = cv2.cvtColor(park_spaces_image,cv2.COLOR_BGR2RGB)
+        name_img = image_filename.split('/')[-1].split('.')[0]
+        name_point = points_filename.split('/')[-1].split('.')[0]
+        park_spaces_image = cv2.cvtColor(park_spaces_image,cv2.COLOR_RGB2BGR)
+        cv2.imwrite(parameters.RESULTS_PATH+'Result_park_spaces_'+name_img+'_'+name_point+'_.jpg',park_spaces_image)
 
 
     states_is_free = np.array(states_is_free)
 
     n_free = int(np.sum(states_is_free*1.0))
-
-
-
-
     print(date_time,"Total park spaces : ",len(states_is_free))
     print(date_time,"Total free spaces : ",n_free)
 
     response = {'spaces':len(states_is_free),'libres': n_free}
-    # encode response using jsonpickle
-    #response_pickled = jsonpickle.encode(response)
-    #return Response(response=response_pickled, status=200, mimetype="application/json")
     return flask.jsonify(response)
 
 
