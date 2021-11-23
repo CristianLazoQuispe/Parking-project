@@ -121,6 +121,7 @@ def test():
     print(date_time,"Total free spaces : ",n_free)
 
     response = {'spaces':len(states_is_free),'libres': n_free}
+    
     return flask.jsonify(response)
 
 

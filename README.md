@@ -73,5 +73,5 @@
 # API
 
         $ cd API
-        $ python3 app.py -i espacio-ocupado.jpg -p regis2.p
+        $ python3 app.py -i espacio-ocupado.jpg -p regions2.p
         $ python3 app.py -i espacio-libre.jpg -p regions2.p
